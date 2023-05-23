@@ -10,21 +10,21 @@
         <h1 class="text-center mb-8"><u>Tell My Age</u></h1>
 
         <v-text-field
-          v-model="Name"
+          v-model="name"
           label="Name"
         ></v-text-field>
 
         <v-text-field
-          v-model="DOB"
+          v-model="dob"
           label="Date of Birth"
         ></v-text-field>
 
         <v-card-actions>
-          <v-btn type="submit" variant="flat" block color="info"  class="">View Age</v-btn>
+          <v-btn type="submit" @click="calculateAge" variant="flat" block color="info"  class="">View Age</v-btn>
         </v-card-actions>
       </v-card>
-      <p class="text-center mx-10 my-10 text-orange font-weight-medium" >Hi ! kaveesha, you've lived :
-        --years, --months, --days, --hours, --minits, --seconds</p>
+      <p class="text-center mx-10 my-10 text-orange font-weight-medium" >Hi ! {{ name }}, you've lived :
+        {{year}} years, {{month}} months, {{ days }} days, {{ hours }} hours, {{ min }} minits, {{ sec }} seconds</p>
     </v-card>
   </div>
 
@@ -37,12 +37,50 @@
     name: "HomePage",
     data(){
       return({
-        dob:'2000/05/20',
-        name:'Kaveesha'
+        dob:'',
+        name:'',
+        year:'',
+        month:'',
+        days:'',
+        hours:'',
+        min:'',
+        sec:''
+
       })
     },
     methods: {
+      calculateAge(){
+        let dob = new Date(this.dob);
+        let today = new Date();
 
+        let ageInMills = today- dob;
+        let ageInSec = Math.floor(ageInMills/1000);
+
+        let year = Math.floor(ageInSec/31536000);
+        ageInSec %= 31536000;
+
+        let month = Math.floor(ageInSec/2628000);
+        ageInSec %= 2628000;
+
+        let days = Math.floor(ageInSec/86400);
+        ageInSec %= 86400;
+
+        let hours = Math.floor(ageInSec/3600);
+        ageInSec %= 3600;
+
+        let min = Math.floor(ageInSec/60);
+        ageInSec %= 60;
+
+        this.year = year;
+        this.month = month;
+        this.days = days;
+        this.hours = hours;
+        this.min = min;
+        this.sec = ageInSec;
+
+        //setInterval(this.calculateAge,1000);
+
+      }
     }
   }
 </script>
