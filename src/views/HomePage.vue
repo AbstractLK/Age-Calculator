@@ -6,7 +6,7 @@
       max-width="600"
       variant="outlined"
     >
-      <v-card class="mx-5 mt-10" >
+      <v-card class="mx-5 my-10" >
         <h1 class="text-center mb-8"><u>Tell My Age</u></h1>
 
         <v-text-field
@@ -21,13 +21,13 @@
         ></v-text-field>
 
         <v-card-actions>
-          <v-btn type="submit" @click="calculateAge" variant="flat" block color="info"  class="">View Age</v-btn>
+          <v-btn type="submit"  @click="calculateAge" variant="flat" block color="info" >View Age</v-btn>
         </v-card-actions>
       </v-card>
-      <p class="text-center mx-10 my-10 text-orange font-weight-medium" >Hi ! {{ name }}, you've lived :
+      <p id="T1" class=" text-center mx-10 my-10 text-orange font-weight-medium" style="display: none;">Hi ! {{ name }}, you've lived :
         {{year}} years, {{month}} months, {{ days }} days, {{ hours }} hours, {{ min }} minits, {{ sec }} seconds</p>
       <hr>
-      <p class="text-center mx-10 my-5 text-red font-weight-medium">Your Next Birthday is coming up in {{to_next}} Days</p>
+      <p id="T2" class=" text-center mx-10 my-5 text-red font-weight-medium" style="display: none;">Your Next Birthday is coming up in {{to_next}} Days</p>
     </v-card>
 
   </div>
@@ -83,6 +83,7 @@
         this.min = min;
         this.sec = ageInSec;
 
+        this.showText();
         this.daysToNextBirthday();
         //setInterval(this.calculateAge,1000);
       },
@@ -95,6 +96,14 @@
           next.setFullYear(today.getFullYear()+1);
         }
         this.to_next = Math.round((next-today)/86400000);
+      },
+
+      showText(){
+        let txt1 = document.getElementById("T1");
+        let txt2 = document.getElementById("T2");
+
+        txt1.style.display = "block";
+        txt2.style.display = "block";
       }
 
     }
