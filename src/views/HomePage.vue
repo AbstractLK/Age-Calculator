@@ -16,7 +16,8 @@
 
         <v-text-field
           v-model="dob"
-          label="Date of Birth"
+          label="Date of Birth "
+          placeholder="YYYY-MM-DD"
         ></v-text-field>
 
         <v-card-actions>
@@ -25,7 +26,10 @@
       </v-card>
       <p class="text-center mx-10 my-10 text-orange font-weight-medium" >Hi ! {{ name }}, you've lived :
         {{year}} years, {{month}} months, {{ days }} days, {{ hours }} hours, {{ min }} minits, {{ sec }} seconds</p>
+      <hr>
+      <p class="text-center mx-10 my-5 text-red font-weight-medium">Your Next Birthday is coming up in {{to_next}} Days</p>
     </v-card>
+
   </div>
 
 
@@ -44,7 +48,8 @@
         days:'',
         hours:'',
         min:'',
-        sec:''
+        sec:'',
+        to_next:''
 
       })
     },
@@ -78,9 +83,20 @@
         this.min = min;
         this.sec = ageInSec;
 
+        this.daysToNextBirthday();
         //setInterval(this.calculateAge,1000);
+      },
 
+      daysToNextBirthday(){
+        let dob = new Date(this.dob);
+        let today = new Date();
+        let next = new Date(today.getFullYear(),dob.getMonth(),dob.getDate());
+        if (next<today){
+          next.setFullYear(today.getFullYear()+1);
+        }
+        this.to_next = Math.round((next-today)/86400000);
       }
+
     }
   }
 </script>
